@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ###Infra###
-*.properties
+/infrastructure/src/main/resources/application.properties
