@@ -31,7 +31,7 @@ public class LlamaApiConfig implements ApiRequest<LlamaApiModel>{
 
  
     @Override
-    public List<LlamaApiModel> request() {
+    public List<LlamaApiModel> request(){
         try {
             final RestTemplate restTemplate = new RestTemplate();
           

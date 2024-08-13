@@ -5,20 +5,20 @@ import java.util.List;
 import com.mine.domain.pool.Pool;
 import com.mine.domain.pool.PoolGateway;
 
-public class DefaultListPool extends PoolListUseCase {
+public class DefaultListPoolUseCase extends ListPoolUseCase {
 
     private final PoolGateway poolGateway;
 
-    public DefaultListPool(PoolGateway poolGateway) {
+    public DefaultListPoolUseCase(PoolGateway poolGateway) {
         this.poolGateway = poolGateway;
     }
 
 
     @Override
-    public List<PoolListOutput> execute() {
+    public List<ListPoolOutput> execute() {
         final List<Pool> findAllPools = this.poolGateway.findAll();
-        List<PoolListOutput> poolList = findAllPools.stream()
-            .map(fn -> new PoolListOutput(fn.getId().getValue(), fn.getUnderlyingTokens(), fn.getVolumeUsd1d())
+        final List<ListPoolOutput> poolList = findAllPools.stream()
+            .map(fn -> new ListPoolOutput(fn.getId().getValue(), fn.getUnderlyingTokens(), fn.getVolumeUsd1d())
         ).toList();
         return poolList;
     }
