@@ -5,7 +5,6 @@ import java.util.Optional;
 
 
 public interface ApiRequest<API> {
-
     
     List<API> request();
 

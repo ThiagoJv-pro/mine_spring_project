@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mine.application.pool.create.CreatePoolCommand;
 import com.mine.application.pool.create.CreatePoolOutput;
 import com.mine.application.pool.create.CreatePoolUseCase;
-import com.mine.application.pool.retrieve.list.PoolListOutput;
-import com.mine.application.pool.retrieve.list.PoolListUseCase;
+import com.mine.application.pool.retrieve.list.ListPoolOutput;
+import com.mine.application.pool.retrieve.list.ListPoolUseCase;
 import com.mine.infrastructure.api.PoolApi;
 import com.mine.infrastructure.configuration.externalApis.difillamaApi.LlamaApiConfig;
 import com.mine.infrastructure.configuration.externalApis.difillamaApi.model.LlamaApiModel;
@@ -22,13 +22,13 @@ import com.mine.infrastructure.pool.model.GetListPoolModel;
 public class PoolController implements PoolApi {
     
     private final CreatePoolUseCase createPoolUseCase;
-    private final PoolListUseCase poolListUseCase;
+    private final ListPoolUseCase poolListUseCase;
     private final LlamaApiConfig api;
     
     public PoolController(
         CreatePoolUseCase createPoolUseCase,
         LlamaApiConfig api,
-        PoolListUseCase poolListUseCase
+        ListPoolUseCase poolListUseCase
     ) {
         this.createPoolUseCase = createPoolUseCase;
         this.api = api;
@@ -75,10 +75,10 @@ public class PoolController implements PoolApi {
     
     @Override
     public List<GetListPoolModel> getPools() {
-        final List<PoolListOutput> poolListCase = this.poolListUseCase.execute();
+        final List<ListPoolOutput> poolListCase = this.poolListUseCase.execute();
         final List<GetListPoolModel> getPool = new ArrayList<>();
 
-        for(PoolListOutput output : poolListCase) {
+        for(ListPoolOutput output : poolListCase) {
             final var findResponse = new GetListPoolModel(
                 output.id(),
                 output.underlyingTokens(),

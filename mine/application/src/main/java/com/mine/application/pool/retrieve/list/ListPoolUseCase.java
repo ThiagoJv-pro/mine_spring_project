@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mine.application.UnityUseCase;
 
-public abstract class PoolListUseCase 
-    extends UnityUseCase<List<PoolListOutput>> {
+public abstract class ListPoolUseCase 
+    extends UnityUseCase<List<ListPoolOutput>> {
     
 }
