@@ -4,5 +4,9 @@
     "cSpell.words": [
         "Outputpool"
     ],
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "boot-java.common.properties-metadata": "",
+    "boot-java.change-detection.on": true,
+    "boot-java.scan-java-test-sources.on": true,
+    "boot-java.support-spring-xml-config.on": true
 }

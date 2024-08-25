@@ -2,13 +2,9 @@ package com.mine.infrastructure.pool;
 
 import com.mine.domain.pool.Pool;
 import com.mine.domain.pool.PoolId;
-import com.mine.domain.pool.Yield;
-import com.mine.domain.protocol.ProtocolId;
-import com.mine.infrastructure.api.PoolApi;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;

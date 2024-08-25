@@ -8,31 +8,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mine.application.pool.create.CreatePoolCommand;
 import com.mine.application.pool.create.CreatePoolOutput;
-import com.mine.application.pool.create.CreatePoolUseCase;
+import com.mine.application.pool.retrieve.get.GetPoolCommand;
 import com.mine.application.pool.retrieve.list.ListPoolOutput;
-import com.mine.application.pool.retrieve.list.ListPoolUseCase;
+import com.mine.domain.pool.PoolId;
 import com.mine.infrastructure.api.PoolApi;
 import com.mine.infrastructure.configuration.externalApis.difillamaApi.LlamaApiConfig;
 import com.mine.infrastructure.configuration.externalApis.difillamaApi.model.LlamaApiModel;
-import com.mine.infrastructure.pool.PoolJpaEntity;
+import com.mine.infrastructure.configuration.useCases.PoolUseCaseConfig;
 import com.mine.infrastructure.pool.model.GetListPoolModel;
+import com.mine.infrastructure.pool.model.GetPoolModel;
 
 
 @RestController
 public class PoolController implements PoolApi {
     
-    private final CreatePoolUseCase createPoolUseCase;
-    private final ListPoolUseCase poolListUseCase;
+    private final PoolUseCaseConfig poolUseCaseConfig;
     private final LlamaApiConfig api;
     
     public PoolController(
-        CreatePoolUseCase createPoolUseCase,
-        LlamaApiConfig api,
-        ListPoolUseCase poolListUseCase
+        PoolUseCaseConfig poolUseCaseConfig,
+        LlamaApiConfig api
     ) {
-        this.createPoolUseCase = createPoolUseCase;
+        this.poolUseCaseConfig = poolUseCaseConfig;
         this.api = api;
-        this.poolListUseCase = poolListUseCase;
     }
 
     @Override
@@ -59,7 +57,7 @@ public class PoolController implements PoolApi {
                         data.annualPercentageVariation30D()
                     );
                 
-                var executeCommand = this.createPoolUseCase.execute(createCommand);
+                var executeCommand = this.poolUseCaseConfig.createPoolUseCase().execute(createCommand);
                 
                 idPoolProcessing.add(executeCommand);
             }
@@ -75,7 +73,7 @@ public class PoolController implements PoolApi {
     
     @Override
     public List<GetListPoolModel> getPools() {
-        final List<ListPoolOutput> poolListCase = this.poolListUseCase.execute();
+        final List<ListPoolOutput> poolListCase = this.poolUseCaseConfig.listPool().execute();
         final List<GetListPoolModel> getPool = new ArrayList<>();
 
         for(ListPoolOutput output : poolListCase) {
@@ -91,9 +89,14 @@ public class PoolController implements PoolApi {
         return getPool;
     }
 
-    // @GetMapping("/teste")
-    // public List<LlamaApiModel> api() {
-    //     return request;
-    // }
-    
+    @Override
+    public ResponseEntity<GetPoolModel> getPool(String id) {
+        
+        final GetPoolCommand aCommand = new GetPoolCommand(PoolId.from(id));
+        final var executeCommand = this.poolUseCaseConfig.getPoolUseCase().execute(aCommand);
+        final GetPoolModel pool = new GetPoolModel(executeCommand.id().getValue(), executeCommand.underlyingTokens(),executeCommand.volumeUsd1d());
+        return ResponseEntity.ok(pool);
+
+    }
+
 }
