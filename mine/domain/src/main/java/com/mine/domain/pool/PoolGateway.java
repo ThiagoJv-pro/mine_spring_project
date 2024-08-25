@@ -11,4 +11,6 @@ public interface PoolGateway {
     
     List<Pool> findAll();
 
+    Pool findById(PoolId aPoolId);
+
 }

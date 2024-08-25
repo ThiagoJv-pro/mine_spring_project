@@ -1,6 +1,8 @@
 package com.mine.infrastructure.pool.persistence;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -43,18 +45,20 @@ public class PoolSqlGateway implements PoolGateway {
     public List<Pool> findAll() {
         final List<PoolJpaEntity> result = this.poolRepository.findAll();
         final List<Pool> responseFind = result.stream()
-            .map(fn -> Pool.with(
-                PoolId.from(fn.getId()), 
-                fn.getChain(), 
-                fn.getSymbol(), 
-                fn.getTotalValueLocked(),
-                fn.getRewardTokens(), 
-                fn.getUnderlyingTokens(),
-                fn.getVolumeUsd1d()
-            )
-        ).toList();
+            .map(PoolJpaEntity::toAggregate)
+            .toList();
         
         return responseFind;        
+    }
+
+    @Override
+    public Pool findById(PoolId aPoolId) {
+        
+        final Optional<PoolJpaEntity> result = this.poolRepository.findById(aPoolId.getValue());
+        final Pool getPool = result.stream().map(PoolJpaEntity::toAggregate).findFirst().orElseThrow();
+
+        return getPool;
+
     }
 
 
