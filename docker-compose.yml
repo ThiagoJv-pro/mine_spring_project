@@ -2,15 +2,12 @@ version: '3.8'
 
 services:
   springboot-app:
-    image: mining-service  # Substitua pelo nome da imagem que você criou no Dockerfile
+    image: mining-service 
     build:
       context: .
       dockerfile: ./mining-service/infrastructure/Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      # Variáveis de ambiente, se necessário
-      SPRING_PROFILES_ACTIVE: "prod"  # Exemplo de variável de ambiente para definir o perfil ativo
     networks:
       - springboot-network
 
