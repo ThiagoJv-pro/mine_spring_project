@@ -1,11 +1,28 @@
 @startuml
 !include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-title "Liquidity Pool Forecast Analysis"
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/postgresql.puml
 
-Person(client, "Client", "Extension User")
-System(Extension, "Frontend","Browser Extension")
-System(APIGateway, "API Gateway", "System")
+title "C4 diagram demonstrating the project components"
+Person(client, "Client", "User")
+System_Boundary(c1, "Pool Insights"){
+    Container(Extension, "Frontend","Angular","Browser Extension", $sprite="angular")
+    Container(APIGateway, "API Gateway", "Spring Gateway/java", "Gateway", $sprite="java")
+    Container(MiningService, "MiningService", "Microsservice","Service to consume data from an external API [DefiLlama], filter, manage and persist data from all currently active liquidity pools", $sprite="java")
+    Container(RecommendationService, "RecommendationService", "Microsservice", "Analysis service, yield calculation and obtaining the best pools for investment at the moment", $sprite="java")
+    ContainerDb(db0, "Database", "Postgresql", "Stores complete data on liquidity pools and yields", $sprite="postgresql")
+    ContainerDb(db1, "Database", "Postgresql", "Stores liquidity pools good for investment", $sprite="postgresql")
+}
+
 Rel(client, Extension, "Uses", "HTTPS")
 Rel(Extension, APIGateway, "Uses", "HTTPS")
+Rel(APIGateway, MiningService, "Uses", "HTTPS")
+Rel(APIGateway, RecommendationService, "Uses", "HTTPS")
+Rel(RecommendationService, MiningService, "Uses", "HTTPS")
+Rel_R(MiningService, db0, "Reads/Writes")
+Rel_R(RecommendationService, db1, "Reads/Writes")
+
 
 @enduml
