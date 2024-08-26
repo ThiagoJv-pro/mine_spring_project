@@ -1,0 +1,11 @@
+@startuml
+!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+title "Liquidity Pool Forecast Analysis"
+
+Person(client, "Client", "Extension User")
+System(Extension, "Frontend","Browser Extension")
+System(APIGateway, "API Gateway", "System")
+Rel(client, Extension, "Uses", "HTTPS")
+Rel(Extension, APIGateway, "Uses", "HTTPS")
+
+@enduml
