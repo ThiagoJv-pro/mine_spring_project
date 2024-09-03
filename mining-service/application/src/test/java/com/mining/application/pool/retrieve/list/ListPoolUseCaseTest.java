@@ -3,15 +3,13 @@ package com.mining.application.pool.retrieve.list;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
-import com.mining.application.pool.retrieve.list.DefaultListPoolUseCase;
 import com.mining.domain.pool.Pool;
 import com.mining.domain.pool.PoolGateway;
 import com.mining.domain.protocol.ProtocolId;
@@ -49,9 +47,9 @@ public class ListPoolUseCaseTest {
 
         final var poolList = List.of(
             Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens, expectedVolumeUsd1d),
+                totalValueLocked, expectedOriginPoolId, null, expectedRewardTokens, expectedUnderlyingTokens, expectedVolumeUsd1d),
             Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                totalValueLocked,expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens, expectedVolumeUsd1d)
+                totalValueLocked,expectedOriginPoolId, null, expectedRewardTokens, expectedUnderlyingTokens, expectedVolumeUsd1d)
         );
         
 

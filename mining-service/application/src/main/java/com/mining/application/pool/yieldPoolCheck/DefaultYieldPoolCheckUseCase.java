@@ -1,6 +1,7 @@
 package com.mining.application.pool.yieldPoolCheck;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.mining.domain.pool.Pool;
 import com.mining.domain.pool.PoolGateway;
@@ -16,14 +17,14 @@ public class DefaultYieldPoolCheckUseCase extends YieldPoolCheckUseCase {
     }
 
     @Override
-    public YieldCheckOutput execute() {
-        List<Pool> pools = this.poolGateway.findAll();
-        List<Pool> checkYield = pools.stream().map(Pool::checkVolatilityYieldPool).toList();
+    public List<YieldCheckOutput> execute() {
+        final List<Pool> getAllPools = this.poolGateway.findAll();
+        final List<YieldCheckOutput> checkYield = getAllPools.stream()
+            .map(Pool::checkVolatilityYieldPool)
+            .filter(object -> Objects.nonNull(object))
+            .map(fn -> YieldCheckOutput.from(fn))
+            .toList();
 
-        return new YieldCheckOutput(checkYield, "message");
+        return checkYield;
     }
-
-
-
-    
 }

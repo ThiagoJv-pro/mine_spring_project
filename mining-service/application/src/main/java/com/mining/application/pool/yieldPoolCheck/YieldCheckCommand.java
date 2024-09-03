@@ -7,4 +7,5 @@ import com.mining.domain.pool.Pool;
 public record YieldCheckCommand(
     List<Pool> pool
 ) {
+
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.mining.domain.pool.Pool;
 import com.mining.domain.pool.PoolGateway;
 import com.mining.domain.pool.PoolId;
-import com.mining.domain.pool.Yield;
 import com.mining.infrastructure.pool.PoolJpaEntity;
 import com.mining.infrastructure.pool.YieldJpaEntity;
 
@@ -37,10 +36,13 @@ public class PoolSqlGateway implements PoolGateway {
             aCreateCommand.getUnderlyingTokens(),
             aCreateCommand.getVolumeUsd1d()
         );
-        this.poolRepository.save(poolJpaEntity);
+        
         if(Objects.nonNull(yieldJpaEntity)) {
-          this.yieldRepository.save(yieldJpaEntity);
+            this.yieldRepository.save(yieldJpaEntity);
         }
+
+        this.poolRepository.save(poolJpaEntity);
+
         return aCreateCommand;
     }
 
@@ -67,9 +69,6 @@ public class PoolSqlGateway implements PoolGateway {
         final Pool getPool = result.stream().map(PoolJpaEntity::toAggregate).findFirst().orElseThrow();
 
         return getPool;
-
     }
 
-
-    
 }

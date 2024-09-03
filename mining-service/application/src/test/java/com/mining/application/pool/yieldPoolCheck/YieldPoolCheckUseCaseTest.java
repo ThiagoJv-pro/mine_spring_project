@@ -1,7 +1,5 @@
 package com.mining.application.pool.yieldPoolCheck;
 
-import static org.mockito.Mockito.when;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import com.mining.domain.pool.Pool;
@@ -126,22 +125,22 @@ public class YieldPoolCheckUseCaseTest {
 
         final var poolList = List.of(
                 Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                        totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens,
+                        totalValueLocked, expectedOriginPoolId, null,expectedRewardTokens, expectedUnderlyingTokens,
                         expectedVolumeUsd1d).setYield(expectedYieldGain),
                 Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                        totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens,
+                        totalValueLocked, expectedOriginPoolId, null,expectedRewardTokens, expectedUnderlyingTokens,
                         expectedVolumeUsd1d).setYield(expectedYieldGain),
                 Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                        totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens,
+                        totalValueLocked, expectedOriginPoolId, null,expectedRewardTokens, expectedUnderlyingTokens,
                         expectedVolumeUsd1dLoss).setYield(expectedYieldLoss),
                 Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                        totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens,
+                        totalValueLocked, expectedOriginPoolId, null,expectedRewardTokens, expectedUnderlyingTokens,
                         expectedVolumeUsd1dModerate).setYield(expectedYieldModerate),
                 Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                        totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens,
+                        totalValueLocked, expectedOriginPoolId, null,expectedRewardTokens, expectedUnderlyingTokens,
                         expectedVolumeUsd1dVolatile).setYield(expectedYieldVolatile),
                 Pool.createPool(expectedChain, expectedProtocolId, expectedSymbol,
-                        totalValueLocked, expectedOriginPoolId, expectedRewardTokens, expectedUnderlyingTokens,
+                        totalValueLocked, expectedOriginPoolId, null,expectedRewardTokens, expectedUnderlyingTokens,
                         expectedVolumeUsd1dRecovery).setYield(expectedYieldRecovery));
 
         when(poolGateway.findAll()).thenReturn(poolList);
