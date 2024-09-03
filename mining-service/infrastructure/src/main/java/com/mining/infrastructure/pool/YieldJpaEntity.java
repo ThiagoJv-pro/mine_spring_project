@@ -43,19 +43,34 @@ public class YieldJpaEntity {
         this.annualPercentageVariation30D = annualPercentageVariation30D;
     }
 
-    public static YieldJpaEntity toJpa(Yield yield) {
-        if(Objects.nonNull(yield)) {
+    public static YieldJpaEntity toJpa(Yield yieldJpaEntity) {
+        if(Objects.nonNull(yieldJpaEntity)) {
             return new YieldJpaEntity(
-                yield.getId(), 
-                yield.getAnnualPercentageYieldBase(), 
-                yield.getAnnualPercentageYieldRewards(), 
-                yield.getAnnualPercentageYield(), 
-                yield.getAnnualPercentageVariation1D(), 
-                yield.getAnnualPercentageVariation7D(), 
-                yield.getAnnualPercentageVariation30D()
+                yieldJpaEntity.getId(), 
+                yieldJpaEntity.getAnnualPercentageYieldBase(), 
+                yieldJpaEntity.getAnnualPercentageYieldRewards(), 
+                yieldJpaEntity.getAnnualPercentageYield(), 
+                yieldJpaEntity.getAnnualPercentageVariation1D(), 
+                yieldJpaEntity.getAnnualPercentageVariation7D(), 
+                yieldJpaEntity.getAnnualPercentageVariation30D()
             );
         }
       return null;
+    }
 
+    public static Yield toAggregate(YieldJpaEntity yieldJpaEntity) {
+        if(Objects.nonNull(yieldJpaEntity)) {
+            return Yield.with(
+                yieldJpaEntity.getId(), 
+                yieldJpaEntity.getAnnualPercentageYieldBase(), 
+                yieldJpaEntity.getAnnualPercentageYieldRewards(), 
+                yieldJpaEntity.getAnnualPercentageYield(), 
+                yieldJpaEntity.getAnnualPercentageVariation1D(), 
+                yieldJpaEntity.getAnnualPercentageVariation7D(), 
+                yieldJpaEntity.getAnnualPercentageVariation30D()
+            );
+        }
+
+        return null;
     }
 }

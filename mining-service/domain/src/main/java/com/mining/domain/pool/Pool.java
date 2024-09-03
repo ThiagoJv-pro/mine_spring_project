@@ -51,6 +51,7 @@ public class Pool extends AggregateRoot<PoolId> {
         String aSymbol,
         Long aTotalValueLocked,
         String originPoolId,
+        Yield aYield,
         String[] aRewardTokens,
         String[] aUnderlyingTokens,
         Double aVolumeUsd1d
@@ -62,7 +63,7 @@ public class Pool extends AggregateRoot<PoolId> {
             aSymbol, 
             aTotalValueLocked,
             originPoolId,
-            null, 
+            aYield, 
             aRewardTokens,
             aUnderlyingTokens,
             aVolumeUsd1d
@@ -91,6 +92,20 @@ public class Pool extends AggregateRoot<PoolId> {
             aRewardTokens,
             aUnderlyingTokens,
             aVolumeUsd1d
+        );
+    }
+
+    public static Pool from(Pool pool){
+        return Pool.with(
+            pool.getId(), 
+            pool.getChain(),
+            pool.getSymbol(),
+            pool.getTotalValueLocked(),
+            pool.getOriginPoolId(),
+            pool.getYield(),
+            pool.getRewardTokens(),
+            pool.getUnderlyingTokens(),
+            pool.getVolumeUsd1d()
         );
     }
 
@@ -152,7 +167,6 @@ public class Pool extends AggregateRoot<PoolId> {
                     }
         }
             
-        
         return null;
     }
 

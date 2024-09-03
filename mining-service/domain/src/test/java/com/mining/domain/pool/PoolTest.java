@@ -29,6 +29,7 @@ public class PoolTest {
             null,
             expectedOriginPoolId,
             null,
+            null,
             underlyingTokens,
             expectedVolumeUsd1d
         );
@@ -60,6 +61,7 @@ public class PoolTest {
             aSymbol, 
             null,
             expectedOriginPoolId,
+            null,
             null,
             underlyingTokens,
             expectedVolumeUsd1d
@@ -114,6 +116,7 @@ public class PoolTest {
             aSymbol, 
             null,
             expectedOriginPoolId,
+            null,
             expectedRewardsTokens,
             underlyingTokens,
             expectedVolumeUsd1d
