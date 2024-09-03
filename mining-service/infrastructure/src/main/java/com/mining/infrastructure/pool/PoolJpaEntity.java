@@ -1,5 +1,7 @@
 package com.mining.infrastructure.pool;
 
+import java.io.Serializable;
+
 import com.mining.domain.pool.Pool;
 import com.mining.domain.pool.PoolId;
 import com.mining.domain.pool.Yield;
@@ -19,8 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PoolJpaEntity {
+public class PoolJpaEntity implements Serializable{
     
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name="id", nullable = false)
     private String id;
@@ -57,7 +61,7 @@ public class PoolJpaEntity {
             getSymbol(),
             getTotalValueLocked(),
             getOriginalPoolId(),
-            null,
+            YieldJpaEntity.toAggregate(getYield()),
             getRewardTokens(),
             getUnderlyingTokens(),
             getVolumeUsd1d()

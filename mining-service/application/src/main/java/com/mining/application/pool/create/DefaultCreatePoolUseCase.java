@@ -37,12 +37,13 @@ public class DefaultCreatePoolUseCase extends CreatePoolUseCase{
             aSymbol, 
             aTotalValueLocked,
             aOriginPoolId,
+            aYield,
             aRewardTokens, 
             aUnderlyingTokens,
             aVolumeUsd1d
         );
 
-        final var aPool = this.poolGateway.create(aCreateCommand).setYield(aYield);
+        final var aPool = this.poolGateway.create(aCreateCommand);
         return aPool;
     }
     

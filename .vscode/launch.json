@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "com.mining.Main",
+            "projectName": "com.mining-infrastructure"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "com.mining.Main",
             "projectName": "infrastructure"
         },
         {
