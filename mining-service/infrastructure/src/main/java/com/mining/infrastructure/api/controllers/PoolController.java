@@ -13,6 +13,7 @@ import com.mining.application.pool.retrieve.list.ListPoolOutput;
 import com.mining.application.pool.yieldPoolCheck.YieldCheckOutput;
 import com.mining.domain.pool.PoolId;
 import com.mining.infrastructure.api.PoolApi;
+import com.mining.infrastructure.configuration.events.jmsConfig.JmsProducer;
 import com.mining.infrastructure.configuration.externalApis.difillamaApi.LlamaApiConfig;
 import com.mining.infrastructure.configuration.externalApis.difillamaApi.model.LlamaApiModel;
 import com.mining.infrastructure.configuration.useCases.PoolUseCaseConfig;
@@ -21,18 +22,23 @@ import com.mining.infrastructure.pool.model.GetBestPoolRequest;
 import com.mining.infrastructure.pool.model.GetListPoolModel;
 import com.mining.infrastructure.pool.model.GetPoolModel;
 
+import jakarta.jms.JMSException;
+
 @RestController
 public class PoolController implements PoolApi {
 
     private final PoolUseCaseConfig poolUseCaseConfig;
     private final LlamaApiConfig api;
+    private final JmsProducer jmsProducer;
 
     public PoolController(
             PoolUseCaseConfig poolUseCaseConfig,
-            LlamaApiConfig api
+            LlamaApiConfig api,
+            JmsProducer jmsProducer
     ) {
         this.poolUseCaseConfig = poolUseCaseConfig;
         this.api = api;
+        this.jmsProducer = jmsProducer;
     }
 
     @Override
@@ -106,8 +112,14 @@ public class PoolController implements PoolApi {
     }
 
     @Override
-    public ResponseEntity<List<GetBestPoolRequest>> getBestPools() {
+    public ResponseEntity<List<GetBestPoolRequest>> getBestPools() throws JMSException {
         final List<YieldCheckOutput> bestPools = this.poolUseCaseConfig.yieldPoolCheckUseCase().execute();
+
+        for(YieldCheckOutput pool : bestPools) {
+            final var poolJ = PoolJpaEntity.toJpa(pool.pool());
+            jmsProducer.sendMessage("queue", poolJ.toString());
+        }
+
         final List<GetBestPoolRequest> request = bestPools.stream()
             .map(fn -> new GetBestPoolRequest(
                 fn.pool().getId().getValue(),
@@ -120,6 +132,9 @@ public class PoolController implements PoolApi {
                 fn.pool().getYield()
             )
         ).toList();
+
+        
+        
         
         return ResponseEntity.ok(request);
     }

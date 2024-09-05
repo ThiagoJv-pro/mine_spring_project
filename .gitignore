@@ -1,1 +1,2 @@
-mine/infrastructure/src/main/resources/application.properties
+mining-service/infrastructure/src/main/resources/application.properties
+recommendation-service/infrastructure/src/main/resources/application.properties

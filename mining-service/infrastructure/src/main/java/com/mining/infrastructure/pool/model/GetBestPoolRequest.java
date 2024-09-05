@@ -11,5 +11,5 @@ public record GetBestPoolRequest(
     String[] underlyingTokens,
     Double volumeUsd1d,
     Yield yield
-){
+) {
 }
