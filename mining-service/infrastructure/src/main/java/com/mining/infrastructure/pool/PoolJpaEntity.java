@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PoolJpaEntity implements Serializable{
+public class PoolJpaEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
@@ -65,6 +65,20 @@ public class PoolJpaEntity implements Serializable{
             getRewardTokens(),
             getUnderlyingTokens(),
             getVolumeUsd1d()
+        );
+    }
+
+    public static PoolJpaEntity toJpa(Pool pool) {
+        return new PoolJpaEntity(
+            pool.getId().getValue(),
+            pool.getChain(),
+            pool.getSymbol(),
+            pool.getTotalValueLocked(),
+            pool.getOriginPoolId(),
+            YieldJpaEntity.toJpa(pool.getYield()),
+            pool.getRewardTokens(),
+            pool.getUnderlyingTokens(),
+            pool.getVolumeUsd1d()
         );
     }
 

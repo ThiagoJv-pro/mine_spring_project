@@ -13,6 +13,8 @@ import com.mining.infrastructure.pool.model.GetBestPoolRequest;
 import com.mining.infrastructure.pool.model.GetListPoolModel;
 import com.mining.infrastructure.pool.model.GetPoolModel;
 
+import jakarta.jms.JMSException;
+
 
 @RequestMapping(value = "pool")
 public interface PoolApi {
@@ -27,5 +29,5 @@ public interface PoolApi {
     ResponseEntity<GetPoolModel> getPool(@PathVariable String id);
 
     @GetMapping(value="/bestPool")
-    ResponseEntity<List<GetBestPoolRequest>> getBestPools();
+    ResponseEntity<List<GetBestPoolRequest>> getBestPools() throws JMSException;
 }
